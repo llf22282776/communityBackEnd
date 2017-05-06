@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lubao.forbackend.dao.CoversionDAO">
+	<resultMap id="map2" type="com.lubao.forbackend.domain.CoversionTable">
+		<id column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="nid" property="nid" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="supportNum" property="supportNum" jdbcType="INTEGER" />
+		<result column="commentNum" property="commentNum" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="DATE" />
+	</resultMap>
+	<resultMap id="map3" type="com.lubao.forbackend.domain.CoversionMix">
+		<result column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="nid" property="nid" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="supportNum" property="supportNum" jdbcType="INTEGER" />
+		<result column="commentNum" property="commentNum" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="DATE" />
+		<result column="nick" property="nick" jdbcType="VARCHAR" />
+		<result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getCoversionMix" parameterType="int" resultMap="map3">
+		SELECT
+		c.cid,c.nid,c.title,c.content,c.supportNum,c.commentNum,c.date,p.nick,p.thumbnail,c.imageUrl
+		FROM coversion c,personal p WHERE c.cid = #{cid} and
+		c.nid = p.nid
+	</select>
+
+	
+	<select id="getCoversionTablesById" parameterType="int"
+		resultMap="map2">
+		SELECT * FROM coversion WHERE cid = #{cid}
+	</select>
+	<select id="getCoversions" resultMap="map3">
+		SELECT
+		c.cid,c.nid,c.title,c.content,c.supportNum,c.commentNum,c.date,p.nick,p.thumbnail,c.imageUrl
+		FROM
+		coversion c,personal p WHERE (c.cid BETWEEN 0 and 100)
+		and c.nid =
+		p.nid order by c.cid desc
+	</select>
+	<select id="searchCoversions" parameterType="string" resultType="com.lubao.forbackend.domain.CoversionMix">
+		SELECT
+		c.cid,c.nid,c.title,c.content,c.supportNum,c.commentNum,c.date,p.nick,p.thumbnail,c.imageUrl
+		FROM 
+		coversion c,personal p WHERE ( c.title like  CONCAT(CONCAT('%', #{text}), '%'))
+		and
+		c.nid = p.nid  order by c.cid desc
+	</select>
+	<insert id="insertCoversion" parameterType="com.lubao.forbackend.domain.CoversionTable">
+		INSERT INTO
+		coversion(nid,title,content,supportNum,commentNum,date,imageUrl)
+		VALUES
+		(#{nid},#{title},#{content},#{supportNum},#{commentNum},#{date},#{imageUrl});
+
+
+	</insert>
+	<update id="upDateCoversion">
+		UPDATE coversion SET commentNum=commentNum+1 WHERE
+		cid = #{cid}
+	</update>
+
+	<select id="selectFromSupport" parameterType="com.lubao.forbackend.domain.NidAndCid" resultType="int">
+		SELECT count(*) from support where cid = #{cid} and nid =#{nid}
+	</select>
+	<delete id="deleteFromSupport" parameterType="com.lubao.forbackend.domain.NidAndCid">
+		DELETE FROM support
+		where cid = #{cid} and nid =#{nid}
+	</delete>
+	<insert id="insertToSupport" parameterType="com.lubao.forbackend.domain.NidAndCid">
+		INSERT INTO  support
+		(cid,nid)values(#{cid},#{nid})
+	</insert>
+
+
+
+	<update id="supportCoversion">
+		UPDATE coversion SET supportNum=supportNum+1 WHERE
+		cid = #{cid}
+	</update>
+	<update id="notSupportCoversion">
+		UPDATE coversion SET supportNum=supportNum-1 WHERE
+		cid = #{cid}
+	</update>
+
+</mapper>

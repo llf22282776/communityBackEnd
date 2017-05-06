@@ -1,0 +1,13 @@
+com\lubao\forbackend\controller\DbController.class
+com\lubao\forbackend\service\CoversionService.class
+com\lubao\forbackend\dao\PersonalDAO.class
+com\lubao\forbackend\service\CommentServiceImp.class
+com\lubao\forbackend\dao\CoversionDAO.class
+com\lubao\forbackend\domain\CommentTable.class
+com\lubao\forbackend\service\PersonalServiceImp.class
+com\lubao\forbackend\domain\CoversionTable.class
+com\lubao\forbackend\domain\PersonalTable.class
+com\lubao\forbackend\service\CoversionServiceImp.class
+com\lubao\forbackend\service\PersonalService.class
+com\lubao\forbackend\dao\CommentDAO.class
+com\lubao\forbackend\service\CommentService.class

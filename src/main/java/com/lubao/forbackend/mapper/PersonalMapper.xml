@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lubao.forbackend.dao.PersonalDAO">
+	<resultMap id="map4" type="com.lubao.forbackend.domain.CommentMix_2">
+		<result column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="nid" property="nid" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="DATE" />
+		<result column="nick" property="nick" jdbcType="VARCHAR" />
+		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+		<result column="title" property="coversionTitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getPersonMsgById" parameterType="int"
+		resultType="com.lubao.forbackend.domain.PersonalTable">
+		select * from personal where #{nid} = nid
+	</select>
+
+	<select id="getMsgNew" parameterType="int" resultMap="map4">
+		SELECT
+		c.cid,cc.title ,c.nid,c.content,c.date,p.nick,p.thumbnail
+		FROM
+		coversion cc ,
+		comment c ,
+		personal p WHERE 
+		p.nid = c.nid and 
+		cc.cid = c.cid and 
+		cc.nid = #{nid} and 
+		c.nid != cc.nid and 
+		c.state = 0 
+		order by 
+		c.date desc;
+	</select>
+	<select id="getMsgNewNums" parameterType="int" resultType="int">
+		SELECT count(*) FROM comment c ,
+		personal p ,coversion cc 
+		WHERE
+		 p.nid = c.nid and 
+		 cc.cid = c.cid and 
+		 cc.nid = #{nid} and 
+		 c.nid != cc.nid and 
+		 c.state = 0 
+	</select>
+	<update id="setMsgViewed">
+		UPDATE comment set state = 1 where cid = #{1} and nid
+		= #{0}
+	</update>
+</mapper>

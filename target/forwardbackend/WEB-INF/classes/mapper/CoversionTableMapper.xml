@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lubao.forbackend.dao">
+	<resultMap id="map2" type="com.lubao.forbackend.domain.CoversionTable">
+		<id column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="nid" property="nid" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="supportNum" property="supportNum" jdbcType="INTEGER" />	
+		<result column="commentNum" property="commentNum" jdbcType="INTEGER" />			
+		<result column="date" property="date" jdbcType="DATE" />
+	</resultMap>
+	<select id="getCoversionTablesById" parameterType="int" resultMap="map2">
+		SELECT * FROM coversion WHERE cid = #{cid}
+	</select>
+	<insert id="insertCoversion" parameterType="com.lubao.forbackend.domain.CoversionTable">
+		INSERT INTO coversion
+		VALUES (#{cid},#{nid},#{title},#{content},#{supportNum},#{commentNum},#{date});
+	</insert>
+</mapper>

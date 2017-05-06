@@ -12,5 +12,6 @@ public interface PersonalService {
     public int setMsgViewed(int[] cids,int[] nids  );//将某个人的消息设置为true
     public CommentMix_2[] getMsgNew(int nid);//获得一个人的新消息
     public int getNewsMsgNums(int nid);//获得一个人的新消息数量
+    public PersonalTable Login(String passPort,String pwd);//登陆
     
 }

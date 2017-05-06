@@ -45,6 +45,14 @@ public class PersonalServiceImp implements PersonalService{
         // TODO Auto-generated method stub
         return personalDAO.getMsgNewNums(nid);
     }
+
+    @Override
+    public PersonalTable Login(String passPort, String pwd) {
+        // TODO Auto-generated method stub
+         
+     
+        return    personalDAO.Login(passPort, pwd);
+    }
     
     
 

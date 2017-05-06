@@ -13,4 +13,5 @@ public interface PersonalDAO {
     public CommentMix_2[] getMsgNew(int nid);//查看个人新的消息
     public int setMsgViewed(int nid,int cid);//将消息设置为已查看
     public int getMsgNewNums(int nid);//查看个人消息的数量
+    public PersonalTable Login(String passPort,String pwd);//登陆
 }

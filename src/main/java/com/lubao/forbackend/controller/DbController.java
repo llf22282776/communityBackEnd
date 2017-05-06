@@ -319,7 +319,30 @@ public class DbController {
         biJsonObject.put("commentList", jsonArray);
         return biJsonObject;
     }
-    
+  //登陆
+    @RequestMapping(value = "personal/Login", method = {
+            RequestMethod.POST, RequestMethod.GET })
+    @ResponseBody
+    public JSONObject Login(@RequestParam("passPort") String passPort,@RequestParam("pwd") String pwd){
+        System.out.println("登陆:"+" "+passPort+" "+pwd);
+        PersonalTable pTable=personalServiceImp.Login(passPort, pwd);
+        JSONObject biJsonObject = new JSONObject();
+        if(pTable != null){
+            biJsonObject.put("nid", pTable.getNid());
+            biJsonObject.put("nick", pTable.getNick());
+            biJsonObject.put("sex", (int)pTable.getSex() == 1 ? "男":"女" );
+            biJsonObject.put("passPort", pTable.getPassPort());
+            biJsonObject.put("pwd", pTable.getPwd());
+            biJsonObject.put("phone", pTable.getPhone());
+            biJsonObject.put("thumbnail", pTable.getThumbnail());
+            biJsonObject.put("isLogined","true");
+        }else {
+            biJsonObject.put("isLogined","false");
+        }
+        
+        return biJsonObject;
+        
+    }
  // 获得个人未通知信息数量
     @RequestMapping(value = "personal/getMsgNewNums", method = {
             RequestMethod.POST, RequestMethod.GET })

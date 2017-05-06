@@ -41,6 +41,14 @@
 		 c.nid != cc.nid and 
 		 c.state = 0 
 	</select>
+	<select id="Login" resultType="com.lubao.forbackend.domain.PersonalTable">
+		SELECT * FROM 
+		personal p 
+		WHERE
+		 #{0} = passPort and 
+		 #{1} = pwd
+	</select> 
+	
 	<update id="setMsgViewed">
 		UPDATE comment set state = 1 where cid = #{1} and nid
 		= #{0}

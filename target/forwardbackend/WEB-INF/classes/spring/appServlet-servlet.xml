@@ -7,22 +7,9 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.lubao.forbackend.controller" />
-
-	<import resource="classpath*:spring/app-*.xml" />
-		<!-- 引入jdbc配置文件   -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:properties/*.properties</value>
-				<!--要是有多个配置文，只需在这里继续添加即可 -->
-			</list>
-		</property>
-	</bean>
-	<mvc:annotation-driven>
+		<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
-			<!-- 配置Fastjson支持 -->
+			<!-- 配置Fastjson支 持 -->
 			<bean
 				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -40,6 +27,29 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	<context:component-scan base-package="com.lubao.forbackend" />
+
+		<!-- 引入jdbc配置文件   -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/*.properties</value>
+				<!--要是有多个配置文，只需在这里继续添加即可 -->
+			</list>
+		</property>
+	</bean>
+		<!-- 自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lubao.forbackend.dao" />
+	</bean>
+	<!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:com/lubao/forbackend/mapper/**/*Mapper.xml" />
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
+	</bean>
+
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource"
@@ -71,16 +81,7 @@
 		</property>
 	</bean>
 
-	<!-- 自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.lubao.forbackend.dao" />
-	</bean>
-	<!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:mapper/*.xml" />
-		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
-	</bean>
+
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>

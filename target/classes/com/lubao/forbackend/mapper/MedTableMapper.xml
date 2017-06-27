@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lubao.forbackend.dao.MedDao">
+
+	<select id="getNumsByMedID" parameterType="string"
+		resultType="int">
+		select count(*) from med where CONCAT(#{0},"") like  medId
+	</select>
+	<insert id="insertMed" parameterType="com.lubao.forbackend.domain.MedMsg">
+		INSERT INTO med (
+			medId,
+			medName,
+			medName_f,
+			medNmae_p,
+			medStruct,
+			medDet,
+			medUnit,
+			medClass,
+			med_before,
+			medDate,
+			medPositionSeq,
+			medJuice,
+			img
+		) values(
+		#{medId},
+		#{medName},
+		#{medName_f},
+		#{medNmae_p},
+		#{medStruct},
+		#{medDet},
+		#{medUnit},
+		#{medClass},
+		#{med_before},
+		#{medDate},
+		#{medPositionSeq},
+		#{medJuice},
+		#{img}
+		);
+	
+	</insert>
+	<select id="getMedMsg" parameterType="string"
+		resultType="com.lubao.forbackend.domain.MedMsg">
+		select * from med where CONCAT(#{0},"") like  medId
+	</select>
+	
+</mapper>

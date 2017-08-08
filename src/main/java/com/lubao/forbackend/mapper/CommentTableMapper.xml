@@ -17,20 +17,20 @@
 		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="getCommentTablesByID" parameterType="int" resultMap="map1">
-		SELECT * FROM comment WHERE cid = #{cid} 
+		SELECT * FROM comment_c WHERE cid = #{cid} 
 	</select>
 	<select id="getCommentTablesByNid" parameterType="int"
 		resultMap="map1">
-		SELECT * FROM comment WHERE nid = #{nid}
+		SELECT * FROM comment_c WHERE nid = #{nid}
 	</select>
 	<select id="getCommentMixsByID" parameterType="int" resultMap="map4">
-		SELECT c.cid,c.nid,c.content,c.date,p.nick,p.thumbnail FROM comment c ,
+		SELECT c.cid,c.nid,c.content,c.date,p.nick,p.thumbnail FROM comment_c c ,
 		personal p WHERE c.cid = #{cid} and c.nid=p.nid order by c.date desc
 	</select>
 	<insert id="insertComment" parameterType="com.lubao.forbackend.domain.CommentTable"
 		useGeneratedKeys="true" keyProperty="cid">
 		INSERT INTO
-		comment(cid,nid,content,date,state) VALUES
+		comment_c(cid,nid,content,date,state) VALUES
 		(#{cid},#{nid},#{content},#{date},#{state})
 	</insert>
 </mapper>

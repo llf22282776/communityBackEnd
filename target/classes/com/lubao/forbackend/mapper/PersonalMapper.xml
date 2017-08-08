@@ -21,7 +21,7 @@
 		c.cid,cc.title ,c.nid,c.content,c.date,p.nick,p.thumbnail
 		FROM
 		coversion cc ,
-		comment c ,
+		comment_c c ,
 		personal p WHERE 
 		p.nid = c.nid and 
 		cc.cid = c.cid and 
@@ -32,7 +32,7 @@
 		c.date desc;
 	</select>
 	<select id="getMsgNewNums" parameterType="int" resultType="int">
-		SELECT count(*) FROM comment c ,
+		SELECT count(*) FROM comment_c c ,
 		personal p ,coversion cc 
 		WHERE
 		 p.nid = c.nid and 
@@ -50,7 +50,7 @@
 	</select> 
 	
 	<update id="setMsgViewed">
-		UPDATE comment set state = 1 where cid = #{1} and nid
+		UPDATE comment_c set state = 1 where cid = #{1} and nid
 		= #{0}
 	</update>
 </mapper>
